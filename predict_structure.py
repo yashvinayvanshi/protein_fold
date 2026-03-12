@@ -4,14 +4,12 @@ import tensorflow as tf
 from Bio.PDB import MMCIFParser
 from sklearn.model_selection import train_test_split
 import py3Dmol
+import matplotlib.pyplot as plt
 
 # ==========================================
-# 1. DATA PARSING & EXTRACTION (CORRECTED)
+# 1. DATA PARSING & EXTRACTION 
 # ==========================================
 def parse_cif_files(cif_directory, max_files=1000):
-    """
-    Reads CIF files and extracts amino acid sequences and secondary structure labels.
-    """
     parser = MMCIFParser(QUIET=True)
     sequences = []
     structures = []
@@ -25,6 +23,11 @@ def parse_cif_files(cif_directory, max_files=1000):
     
     print(f"[INFO] Scanning directory: {cif_directory} for up to {max_files} files...")
     
+    # Ensure directory exists before listing
+    if not os.path.exists(cif_directory):
+        print(f"[ERROR] Directory {cif_directory} not found.")
+        return [], []
+
     file_list = [f for f in os.listdir(cif_directory) if f.endswith(".cif")]
     total_files = min(len(file_list), max_files)
     print(f"[INFO] Found {len(file_list)} CIF files. Processing {total_files} of them...")
@@ -34,13 +37,11 @@ def parse_cif_files(cif_directory, max_files=1000):
             
         filepath = os.path.join(cif_directory, filename)
         
-        # --- NEW: Progress log every 100 files ---
         if count > 0 and count % 100 == 0:
             print(f"  -> Parsed {count}/{total_files} files...")
             
         try:
             structure = parser.get_structure(filename[:-4], filepath)
-            
             for model in structure:
                 for chain in model:
                     seq = []
@@ -50,7 +51,7 @@ def parse_cif_files(cif_directory, max_files=1000):
                         if res_name not in aa_3_to_1:
                             continue 
                         seq.append(aa_3_to_1[res_name]) 
-                        label.append('H') 
+                        label.append('H') # Mocked label 
                     
                     if len(seq) > 20: 
                         sequences.append("".join(seq))
@@ -68,9 +69,6 @@ def parse_cif_files(cif_directory, max_files=1000):
 # 2. DATA ENCODING & PREPROCESSING
 # ==========================================
 def encode_data(sequences, structures, max_seq_length=500):
-    """
-    Converts text sequences into padded numerical arrays for ML training.
-    """
     print(f"[INFO] Encoding {len(sequences)} sequences into numerical arrays...")
     
     aa_vocab = "ACDEFGHIKLMNPQRSTVWY"
@@ -91,20 +89,16 @@ def encode_data(sequences, structures, max_seq_length=500):
     X_onehot = tf.keras.utils.to_categorical(X, num_classes=len(aa_vocab)+1)
     Y_onehot = tf.keras.utils.to_categorical(Y, num_classes=len(ss_vocab)+1)
     
-    # --- NEW: Log the final shape of the tensors ---
     print(f"[INFO] Encoding complete. Input tensor shape (X): {X_onehot.shape}")
     print(f"[INFO] Output tensor shape (Y): {Y_onehot.shape}")
     
-    return X_onehot, Y_onehot
+    return X_onehot, Y_onehot, aa_vocab, ss_vocab
 
 
 # ==========================================
 # 3. MODEL ARCHITECTURE
 # ==========================================
 def build_model(max_seq_length=500, num_aa_classes=21, num_ss_classes=4):
-    """
-    Builds a 1D Convolutional Neural Network for sequence-to-sequence prediction.
-    """
     print("[INFO] Constructing 1D Convolutional Neural Network architecture...")
     model = tf.keras.Sequential([
         tf.keras.layers.Input(shape=(max_seq_length, num_aa_classes)),
@@ -115,10 +109,7 @@ def build_model(max_seq_length=500, num_aa_classes=21, num_ss_classes=4):
         tf.keras.layers.Dense(num_ss_classes, activation='softmax')
     ])
     
-    model.compile(optimizer='adam', 
-                  loss='categorical_crossentropy', 
-                  metrics=['accuracy'])
-    
+    model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
     print("[INFO] Model compiled successfully.")
     return model
 
@@ -127,9 +118,6 @@ def build_model(max_seq_length=500, num_aa_classes=21, num_ss_classes=4):
 # 4. TRAINING & VALIDATION
 # ==========================================
 def train_and_validate(X, Y, model):
-    """
-    Splits data, trains the model, and validates its performance.
-    """
     print("[INFO] Splitting data into Training and Testing sets (80/20)...")
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
     
@@ -138,11 +126,8 @@ def train_and_validate(X, Y, model):
     print("[INFO] Starting model training phase...\n")
     
     history = model.fit(
-        X_train, Y_train,
-        validation_data=(X_test, Y_test),
-        epochs=10,          
-        batch_size=32,
-        verbose=1 # Keras will automatically print a progress bar for each epoch
+        X_train, Y_train, validation_data=(X_test, Y_test),
+        epochs=10, batch_size=32, verbose=1 
     )
     
     print("\n[INFO] Evaluating model on validation data...")
@@ -154,17 +139,14 @@ def train_and_validate(X, Y, model):
     print(f"Validation Accuracy: {accuracy*100:.2f}%")
     print(f"=========================================\n")
     
-    return model, history
+    return model, X_test, Y_test
 
 
 # ==========================================
 # 5. VISUALIZATION OF 3D STRUCTURE
 # ==========================================
 def visualize_cif_structure(cif_filepath):
-    """
-    Renders an interactive 3D visualization of a CIF file.
-    """
-    print(f"\n[STAGE 5] Visualizing 3D Structure for: {os.path.basename(cif_filepath)}")
+    print(f"\n[INFO] Visualizing 3D Structure for: {os.path.basename(cif_filepath)}")
     with open(cif_filepath, 'r') as f:
         cif_data = f.read()
 
@@ -172,8 +154,72 @@ def visualize_cif_structure(cif_filepath):
     view.addModel(cif_data, 'cif')
     view.setStyle({'cartoon': {'color': 'spectrum'}})
     view.zoomTo()
-    
     return view.show()
+
+
+# ==========================================
+# 6. SAVE OUTPUTS (SUMMARY & IMAGE)
+# ==========================================
+def generate_and_save_outputs(model, X_sample, y_sample, ss_vocab, output_dir="./outputs"):
+    """
+    Predicts a structure, saves a text summary, and plots the prediction as an image.
+    """
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+        print(f"[INFO] Created output directory at {output_dir}")
+
+    print("\n[INFO] Generating predictions for sample output...")
+    
+    # 1. Predict on a single sample
+    sample_input = np.expand_dims(X_sample, axis=0) # Shape (1, 500, 21)
+    prediction = model.predict(sample_input, verbose=0) # Shape (1, 500, 4)
+    
+    # Convert one-hot vectors back to integer indices
+    pred_indices = np.argmax(prediction[0], axis=-1)
+    true_indices = np.argmax(y_sample, axis=-1)
+    
+    # Decode back to structure letters, ignoring padding (0)
+    ss_map = {i+1: char for i, char in enumerate(ss_vocab)}
+    ss_map[0] = '-' # Padding character
+    
+    pred_str = "".join([ss_map.get(idx, '-') for idx in pred_indices if idx != 0])
+    true_str = "".join([ss_map.get(idx, '-') for idx in true_indices if idx != 0])
+    
+    # --- SAVE TEXT SUMMARY ---
+    summary_path = os.path.join(output_dir, "prediction_summary.txt")
+    with open(summary_path, "w") as f:
+        f.write("=== PROTEIN SECONDARY STRUCTURE PREDICTION SUMMARY ===\n\n")
+        f.write(f"Sequence Length: {len(true_str)} amino acids\n\n")
+        f.write("TRUE STRUCTURE (Ground Truth):\n")
+        f.write(true_str + "\n\n")
+        f.write("PREDICTED STRUCTURE (Model Output):\n")
+        f.write(pred_str + "\n\n")
+        f.write("Legend: H = Helix, E = Sheet, C = Coil, - = Padding\n")
+    print(f"[INFO] Prediction summary saved to: {summary_path}")
+
+    # --- SAVE IMAGE MAP ---
+    print("[INFO] Generating visual map of the predicted structure...")
+    image_path = os.path.join(output_dir, "predicted_structure_map.png")
+    
+    fig, ax = plt.subplots(figsize=(15, 3))
+    colors = {'H': 'red', 'E': 'blue', 'C': 'gray', '-': 'white'}
+    
+    # Plot predicted sequence as a color bar
+    x_vals = range(len(pred_str))
+    y_vals = [1] * len(pred_str)
+    c_vals = [colors[char] for char in pred_str]
+    
+    ax.bar(x_vals, y_vals, color=c_vals, width=1.0)
+    ax.set_yticks([])
+    ax.set_xlim(0, len(pred_str))
+    ax.set_title("Predicted Secondary Structure Map (Red=Helix, Blue=Sheet, Gray=Coil)")
+    ax.set_xlabel("Amino Acid Position")
+    
+    plt.tight_layout()
+    plt.savefig(image_path, dpi=300)
+    plt.close()
+    
+    print(f"[INFO] Structural prediction image saved to: {image_path}")
 
 
 # ==========================================
@@ -191,18 +237,18 @@ if __name__ == "__main__":
     
     if len(seqs) > 0:
         print("\n[STAGE 2] ENCODING DATA")
-        X, Y = encode_data(seqs, structs, max_seq_length=500)
+        X, Y, aa_vocab, ss_vocab = encode_data(seqs, structs, max_seq_length=500)
         
         print("\n[STAGE 3] BUILDING MODEL")
         model = build_model(max_seq_length=500)
-        # model.summary() # Uncomment if you want the massive layer-by-layer Keras printout
         
         print("\n[STAGE 4] TRAINING & VALIDATION")
-        trained_model, history = train_and_validate(X, Y, model)
+        trained_model, X_test, Y_test = train_and_validate(X, Y, model)
         
-        # print("\n[STAGE 5] VISUALIZATION")
-        # test_file = os.path.join(dataset_path, os.listdir(dataset_path)[0])
-        # visualize_cif_structure(test_file)
+        print("\n[STAGE 6] SAVING OUTPUTS")
+        # Grab the very first sequence in the test set to visualize
+        generate_and_save_outputs(trained_model, X_test[0], Y_test[0], ss_vocab)
+        
     else:
         print("\n[ERROR] No sequences were parsed. Please check if your dataset directory has valid .cif files.")
         
