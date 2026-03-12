@@ -2,12 +2,13 @@ import os
 import numpy as np
 import tensorflow as tf
 from Bio.PDB import MMCIFParser
+from Bio.PDB.MMCIF2Dict import MMCIF2Dict
 from sklearn.model_selection import train_test_split
 import py3Dmol
 import matplotlib.pyplot as plt
 
 # ==========================================
-# 1. DATA PARSING & EXTRACTION 
+# 1. DATA PARSING & EXTRACTION (REAL LABELS)
 # ==========================================
 def parse_cif_files(cif_directory, max_files=1000):
     parser = MMCIFParser(QUIET=True)
@@ -23,7 +24,6 @@ def parse_cif_files(cif_directory, max_files=1000):
     
     print(f"[INFO] Scanning directory: {cif_directory} for up to {max_files} files...")
     
-    # Ensure directory exists before listing
     if not os.path.exists(cif_directory):
         print(f"[ERROR] Directory {cif_directory} not found.")
         return [], []
@@ -34,13 +34,38 @@ def parse_cif_files(cif_directory, max_files=1000):
 
     for count, filename in enumerate(file_list):
         if count >= max_files: break
-            
         filepath = os.path.join(cif_directory, filename)
         
         if count > 0 and count % 100 == 0:
             print(f"  -> Parsed {count}/{total_files} files...")
             
         try:
+            # --- NEW: Extract real secondary structure from CIF metadata ---
+            cif_dict = MMCIF2Dict(filepath)
+            
+            # Map out all Helix positions
+            helix_ids = set()
+            if '_struct_conf.beg_auth_seq_id' in cif_dict:
+                starts = cif_dict['_struct_conf.beg_auth_seq_id']
+                ends = cif_dict['_struct_conf.end_auth_seq_id']
+                for s, e in zip(starts, ends):
+                    try:
+                        for idx in range(int(s), int(e) + 1):
+                            helix_ids.add(idx)
+                    except ValueError: pass # Ignore corrupted or missing IDs
+                    
+            # Map out all Sheet positions
+            sheet_ids = set()
+            if '_struct_sheet_range.beg_auth_seq_id' in cif_dict:
+                starts = cif_dict['_struct_sheet_range.beg_auth_seq_id']
+                ends = cif_dict['_struct_sheet_range.end_auth_seq_id']
+                for s, e in zip(starts, ends):
+                    try:
+                        for idx in range(int(s), int(e) + 1):
+                            sheet_ids.add(idx)
+                    except ValueError: pass
+
+            # --- Extract sequence and apply real labels ---
             structure = parser.get_structure(filename[:-4], filepath)
             for model in structure:
                 for chain in model:
@@ -50,12 +75,25 @@ def parse_cif_files(cif_directory, max_files=1000):
                         res_name = residue.get_resname()
                         if res_name not in aa_3_to_1:
                             continue 
+                        
                         seq.append(aa_3_to_1[res_name]) 
-                        label.append('H') # Mocked label 
+                        
+                        # Get the physical residue number
+                        res_seq_num = residue.get_id()[1]
+                        
+                        # Apply the real label based on the metadata map
+                        if res_seq_num in helix_ids:
+                            label.append('H')
+                        elif res_seq_num in sheet_ids:
+                            label.append('E')
+                        else:
+                            label.append('C') # Random Coil / Loop
                     
                     if len(seq) > 20: 
-                        sequences.append("".join(seq))
-                        structures.append("".join(label))
+                        # Only append if it's a real protein with some actual structure
+                        if 'H' in label or 'E' in label:
+                            sequences.append("".join(seq))
+                            structures.append("".join(label))
                     break 
                 break
         except Exception as e:
@@ -127,7 +165,7 @@ def train_and_validate(X, Y, model):
     
     history = model.fit(
         X_train, Y_train, validation_data=(X_test, Y_test),
-        epochs=10, batch_size=32, verbose=1 
+        epochs=15, batch_size=32, verbose=1 
     )
     
     print("\n[INFO] Evaluating model on validation data...")
@@ -143,49 +181,26 @@ def train_and_validate(X, Y, model):
 
 
 # ==========================================
-# 5. VISUALIZATION OF 3D STRUCTURE
-# ==========================================
-def visualize_cif_structure(cif_filepath):
-    print(f"\n[INFO] Visualizing 3D Structure for: {os.path.basename(cif_filepath)}")
-    with open(cif_filepath, 'r') as f:
-        cif_data = f.read()
-
-    view = py3Dmol.view(width=800, height=500)
-    view.addModel(cif_data, 'cif')
-    view.setStyle({'cartoon': {'color': 'spectrum'}})
-    view.zoomTo()
-    return view.show()
-
-
-# ==========================================
-# 6. SAVE OUTPUTS (SUMMARY & IMAGE)
+# 5. SAVE OUTPUTS (SUMMARY & IMAGE)
 # ==========================================
 def generate_and_save_outputs(model, X_sample, y_sample, ss_vocab, output_dir="./outputs"):
-    """
-    Predicts a structure, saves a text summary, and plots the prediction as an image.
-    """
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
-        print(f"[INFO] Created output directory at {output_dir}")
 
     print("\n[INFO] Generating predictions for sample output...")
     
-    # 1. Predict on a single sample
-    sample_input = np.expand_dims(X_sample, axis=0) # Shape (1, 500, 21)
-    prediction = model.predict(sample_input, verbose=0) # Shape (1, 500, 4)
+    sample_input = np.expand_dims(X_sample, axis=0)
+    prediction = model.predict(sample_input, verbose=0) 
     
-    # Convert one-hot vectors back to integer indices
     pred_indices = np.argmax(prediction[0], axis=-1)
     true_indices = np.argmax(y_sample, axis=-1)
     
-    # Decode back to structure letters, ignoring padding (0)
     ss_map = {i+1: char for i, char in enumerate(ss_vocab)}
-    ss_map[0] = '-' # Padding character
+    ss_map[0] = '-' 
     
     pred_str = "".join([ss_map.get(idx, '-') for idx in pred_indices if idx != 0])
     true_str = "".join([ss_map.get(idx, '-') for idx in true_indices if idx != 0])
     
-    # --- SAVE TEXT SUMMARY ---
     summary_path = os.path.join(output_dir, "prediction_summary.txt")
     with open(summary_path, "w") as f:
         f.write("=== PROTEIN SECONDARY STRUCTURE PREDICTION SUMMARY ===\n\n")
@@ -197,23 +212,28 @@ def generate_and_save_outputs(model, X_sample, y_sample, ss_vocab, output_dir=".
         f.write("Legend: H = Helix, E = Sheet, C = Coil, - = Padding\n")
     print(f"[INFO] Prediction summary saved to: {summary_path}")
 
-    # --- SAVE IMAGE MAP ---
     print("[INFO] Generating visual map of the predicted structure...")
     image_path = os.path.join(output_dir, "predicted_structure_map.png")
     
-    fig, ax = plt.subplots(figsize=(15, 3))
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(15, 6), sharex=True)
     colors = {'H': 'red', 'E': 'blue', 'C': 'gray', '-': 'white'}
     
-    # Plot predicted sequence as a color bar
-    x_vals = range(len(pred_str))
-    y_vals = [1] * len(pred_str)
-    c_vals = [colors[char] for char in pred_str]
+    x_vals = range(len(true_str))
     
-    ax.bar(x_vals, y_vals, color=c_vals, width=1.0)
-    ax.set_yticks([])
-    ax.set_xlim(0, len(pred_str))
-    ax.set_title("Predicted Secondary Structure Map (Red=Helix, Blue=Sheet, Gray=Coil)")
-    ax.set_xlabel("Amino Acid Position")
+    # Plot True
+    true_c = [colors[char] for char in true_str]
+    ax1.bar(x_vals, [1]*len(true_str), color=true_c, width=1.0)
+    ax1.set_yticks([])
+    ax1.set_title("True Secondary Structure")
+
+    # Plot Predicted
+    pred_c = [colors[char] for char in pred_str]
+    ax2.bar(x_vals, [1]*len(pred_str), color=pred_c, width=1.0)
+    ax2.set_yticks([])
+    ax2.set_title("Predicted Secondary Structure")
+    
+    ax2.set_xlim(0, len(true_str))
+    ax2.set_xlabel("Amino Acid Position")
     
     plt.tight_layout()
     plt.savefig(image_path, dpi=300)
@@ -245,13 +265,8 @@ if __name__ == "__main__":
         print("\n[STAGE 4] TRAINING & VALIDATION")
         trained_model, X_test, Y_test = train_and_validate(X, Y, model)
         
-        print("\n[STAGE 6] SAVING OUTPUTS")
-        # Grab the very first sequence in the test set to visualize
+        print("\n[STAGE 5] SAVING OUTPUTS")
         generate_and_save_outputs(trained_model, X_test[0], Y_test[0], ss_vocab)
         
     else:
-        print("\n[ERROR] No sequences were parsed. Please check if your dataset directory has valid .cif files.")
-        
-    print("\n=========================================")
-    print("      PIPELINE EXECUTION FINISHED        ")
-    print("=========================================")
+        print("\n[ERROR] No sequences were parsed.")
