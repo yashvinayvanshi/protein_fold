@@ -1,0 +1,5 @@
+biopython>=1.83
+tensorflow>=2.15
+numpy>=1.26
+scikit-learn>=1.4
+py3Dmol>=2.0
