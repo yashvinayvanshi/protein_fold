@@ -1,0 +1,11 @@
+{
+  "vocab_size": 22,
+  "embed_dim": 64,
+  "num_filters": 64,
+  "lstm_hidden": 256,
+  "lstm_layers": 2,
+  "num_classes": 3,
+  "dropout": 0.3,
+  "pad_idx": 21,
+  "max_len": 256
+}
