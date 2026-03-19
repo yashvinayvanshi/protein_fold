@@ -1,0 +1,7 @@
+2026-03-19 15:07:06  INFO      Log file: /Users/yashvinayvanshi/Desktop/protein_fold/3D/outputs/logs/train_3d_20260319_150706.log
+2026-03-19 15:07:06  INFO      Device: cpu
+2026-03-19 15:07:06  INFO      Loading CIF files from: /Users/yashvinayvanshi/Desktop/protein_fold/3D/pdb_dataset
+2026-03-19 15:07:06  INFO        Parsing CIF files … 100/200
+2026-03-19 15:07:07  INFO        Parsing CIF files … 200/200
+2026-03-19 15:07:07  INFO      Dataset: 200 proteins loaded, 0 skipped.
+2026-03-19 15:07:07  INFO      Train batches: 23 | Val batches: 3

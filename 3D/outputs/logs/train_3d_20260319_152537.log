@@ -1,0 +1,31 @@
+2026-03-19 15:25:37  INFO      Log file: /Users/yashvinayvanshi/Desktop/protein_fold/3D/outputs/logs/train_3d_20260319_152537.log
+2026-03-19 15:25:37  INFO      Device: cpu
+2026-03-19 15:25:37  INFO      Loading CIF files from: /Users/yashvinayvanshi/Desktop/protein_fold/3D/pdb_dataset
+2026-03-19 15:25:37  INFO        Parsing CIF files … 100/200
+2026-03-19 15:25:38  INFO        Parsing CIF files … 200/200
+2026-03-19 15:25:38  INFO      Dataset: 200 proteins loaded, 0 skipped.
+2026-03-19 15:25:38  INFO      Train batches: 23 | Val batches: 3
+2026-03-19 15:25:38  INFO      Model parameters: 2,709,955
+2026-03-19 15:25:38  INFO      Config: {'vocab_size': 22, 'embed_dim': 64, 'num_filters': 192, 'lstm_hidden': 256, 'lstm_layers': 2, 'dropout': 0.3, 'pad_idx': 21, 'max_len': 256}
+2026-03-19 15:25:38  INFO      ============================================================
+2026-03-19 15:25:38  INFO      Starting training: 3 epochs
+2026-03-19 15:25:38  INFO      ============================================================
+2026-03-19 15:25:38  INFO      
+Epoch 1/3
+2026-03-19 15:25:51  INFO        train_loss=90.0160  val_loss=99.5279  val_RMSD=14.25 Å  lr=1.00e-03  time=12.9s
+2026-03-19 15:25:51  INFO        ✓ New best checkpoint (val_loss=99.5279)
+2026-03-19 15:25:51  INFO      
+Epoch 2/3
+2026-03-19 15:26:04  INFO        train_loss=76.2401  val_loss=85.0921  val_RMSD=13.45 Å  lr=1.00e-03  time=13.0s
+2026-03-19 15:26:04  INFO        ✓ New best checkpoint (val_loss=85.0921)
+2026-03-19 15:26:04  INFO      
+Epoch 3/3
+2026-03-19 15:26:17  INFO        train_loss=70.4898  val_loss=76.7176  val_RMSD=12.54 Å  lr=1.00e-03  time=12.6s
+2026-03-19 15:26:17  INFO        ✓ New best checkpoint (val_loss=76.7176)
+2026-03-19 15:26:17  INFO      
+============================================================
+2026-03-19 15:26:17  INFO      Training complete
+2026-03-19 15:26:17  INFO        Total time : 0.6 min
+2026-03-19 15:26:17  INFO        Best epoch : 3  val_loss=76.7176  val_RMSD=12.54 Å
+2026-03-19 15:26:17  INFO      ============================================================
+2026-03-19 15:26:17  INFO      Results saved → /Users/yashvinayvanshi/Desktop/protein_fold/3D/outputs/train_results_3d.json

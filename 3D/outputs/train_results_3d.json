@@ -1,0 +1,43 @@
+{
+  "config": {
+    "vocab_size": 22,
+    "embed_dim": 64,
+    "num_filters": 192,
+    "lstm_hidden": 256,
+    "lstm_layers": 2,
+    "dropout": 0.3,
+    "pad_idx": 21,
+    "max_len": 256
+  },
+  "best_epoch": {
+    "epoch": 3,
+    "train_loss": 70.48977,
+    "val_loss": 76.717611,
+    "val_rmsd": 12.5448,
+    "lr": 0.001
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 90.016006,
+      "val_loss": 99.527888,
+      "val_rmsd": 14.2522,
+      "lr": 0.001
+    },
+    {
+      "epoch": 2,
+      "train_loss": 76.240054,
+      "val_loss": 85.092089,
+      "val_rmsd": 13.4538,
+      "lr": 0.001
+    },
+    {
+      "epoch": 3,
+      "train_loss": 70.48977,
+      "val_loss": 76.717611,
+      "val_rmsd": 12.5448,
+      "lr": 0.001
+    }
+  ],
+  "total_time_s": 38.7
+}
