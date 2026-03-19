@@ -10,34 +10,83 @@
     "max_len": 256
   },
   "best_epoch": {
-    "epoch": 3,
-    "train_loss": 70.48977,
-    "val_loss": 76.717611,
-    "val_rmsd": 12.5448,
+    "epoch": 10,
+    "train_loss": 72.106914,
+    "val_loss": 80.771859,
+    "val_rmsd": 12.9012,
     "lr": 0.001
   },
   "history": [
     {
       "epoch": 1,
-      "train_loss": 90.016006,
-      "val_loss": 99.527888,
-      "val_rmsd": 14.2522,
+      "train_loss": 98.478245,
+      "val_loss": 96.574927,
+      "val_rmsd": 15.5209,
       "lr": 0.001
     },
     {
       "epoch": 2,
-      "train_loss": 76.240054,
-      "val_loss": 85.092089,
-      "val_rmsd": 13.4538,
+      "train_loss": 96.331396,
+      "val_loss": 93.731947,
+      "val_rmsd": 14.8571,
       "lr": 0.001
     },
     {
       "epoch": 3,
-      "train_loss": 70.48977,
-      "val_loss": 76.717611,
-      "val_rmsd": 12.5448,
+      "train_loss": 91.591905,
+      "val_loss": 91.736716,
+      "val_rmsd": 14.6835,
+      "lr": 0.001
+    },
+    {
+      "epoch": 4,
+      "train_loss": 89.019313,
+      "val_loss": 88.382533,
+      "val_rmsd": 14.7069,
+      "lr": 0.001
+    },
+    {
+      "epoch": 5,
+      "train_loss": 85.832491,
+      "val_loss": 86.533215,
+      "val_rmsd": 14.2857,
+      "lr": 0.001
+    },
+    {
+      "epoch": 6,
+      "train_loss": 82.526206,
+      "val_loss": 85.433772,
+      "val_rmsd": 13.9363,
+      "lr": 0.001
+    },
+    {
+      "epoch": 7,
+      "train_loss": 81.123783,
+      "val_loss": 86.164532,
+      "val_rmsd": 13.465,
+      "lr": 0.001
+    },
+    {
+      "epoch": 8,
+      "train_loss": 77.935456,
+      "val_loss": 81.441407,
+      "val_rmsd": 13.3299,
+      "lr": 0.001
+    },
+    {
+      "epoch": 9,
+      "train_loss": 75.119031,
+      "val_loss": 90.490113,
+      "val_rmsd": 12.7242,
+      "lr": 0.001
+    },
+    {
+      "epoch": 10,
+      "train_loss": 72.106914,
+      "val_loss": 80.771859,
+      "val_rmsd": 12.9012,
       "lr": 0.001
     }
   ],
-  "total_time_s": 38.7
+  "total_time_s": 969.1
 }
