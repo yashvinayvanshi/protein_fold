@@ -1,0 +1,17 @@
+{
+  "name": "hemoglobin_alpha_1HHO",
+  "sequence": "VLSPADKTNVKAAWGKVGAHAGEYGAEALERMFLSFPTTKTYFPHFDLSHGSAQVKGHGKKVADALTNAVAHVDDMPNALSALSDLHAHKLRVDPVNFKLLSHCLLVTLAAHLPAEFTPAVHASLDKFLASVSTVLTSKYR",
+  "length": 141,
+  "checkpoint": "/Users/yashvinayvanshi/Desktop/protein_fold/3D/outputs/checkpoints/best_model_3d.pt",
+  "device": "cpu",
+  "inference_time_s": 0.013,
+  "output_cif": "/Users/yashvinayvanshi/Desktop/protein_fold/3D/outputs/predictions/hemoglobin_alpha_1HHO.cif",
+  "timestamp": "2026-03-20T12:35:02",
+  "validation": {
+    "reference_pdb": "1HHO",
+    "predicted_length": 141,
+    "reference_length": 141,
+    "aligned_length": 141,
+    "kabsch_rmsd_A": 11.6846
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "T4Lysosyme_102L",
+  "sequence": "MNIFEMLRIDEGLRLKIYKDTEGYYTIGIGHLLTKSPSLNAAKSELDKAIGRNTNGVITKDEAEKLFNQDVDAAVRGILRNAKLKPVYDSLDAVRRCALINMVFQMGETGVAGFTNSLRMLQQKRWDEAAVNLAKSRWYNQTPNRAKRVITTFRTGTWDAYKNL",
+  "length": 164,
+  "checkpoint": "/Users/yashvinayvanshi/Desktop/protein_fold/3D/outputs/checkpoints/best_model_3d.pt",
+  "device": "cpu",
+  "inference_time_s": 0.054,
+  "output_cif": "/Users/yashvinayvanshi/Desktop/protein_fold/3D/outputs/predictions/T4Lysosyme_102L.cif",
+  "timestamp": "2026-03-20T12:32:25",
+  "validation": {
+    "reference_pdb": "102L",
+    "predicted_length": 164,
+    "reference_length": 163,
+    "aligned_length": 163,
+    "kabsch_rmsd_A": 7.2867
+  }
+}

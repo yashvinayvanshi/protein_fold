@@ -1,0 +1,17 @@
+{
+  "name": "gfp_1EMA",
+  "sequence": "MSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTFSYGVQCFSRYPDHMKQHDFFKSAMPEGYVQERTIFFKDDGNYKTRAEVKFEGDTLVNRIELKGIDFKEDGNILGHKLEYNYNSHNVYIMADKQKNGIKVNFKIRHNIEDGSVQLADHYQQNTPIGDGPVLLPDNHYLSTQSALSKDPNEKRDHMVLLEFVTAAGITHGMDELYK",
+  "length": 238,
+  "checkpoint": "/Users/yashvinayvanshi/Desktop/protein_fold/3D/outputs/checkpoints/best_model_3d.pt",
+  "device": "cpu",
+  "inference_time_s": 0.02,
+  "output_cif": "/Users/yashvinayvanshi/Desktop/protein_fold/3D/outputs/predictions/gfp_1EMA.cif",
+  "timestamp": "2026-03-20T12:34:40",
+  "validation": {
+    "reference_pdb": "1EMA",
+    "predicted_length": 238,
+    "reference_length": 221,
+    "aligned_length": 221,
+    "kabsch_rmsd_A": 15.988
+  }
+}

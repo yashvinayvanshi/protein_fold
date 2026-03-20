@@ -9,3 +9,6 @@ scipy>=1.11.0
 # Visualisation
 matplotlib>=3.7.0
 py3Dmol>=2.0.0
+
+# Data fetching
+requests>=2.28.0

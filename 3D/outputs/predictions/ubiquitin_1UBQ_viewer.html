@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Protein 3D Viewer — ubiquitin_1UBQ</title>
+  <style>
+    body { font-family: sans-serif; background: #f5f5f5; margin: 0; }
+    h2   { text-align:center; padding:10px; color:#333; }
+    p    { text-align:center; font-size:13px; color:#666; margin:0 0 6px; }
+    .viewer-wrap { display:flex; justify-content:center; padding:10px; }
+  </style>
+</head>
+<body>
+  <h2>Predicted Structure — ubiquitin_1UBQ</h2>
+  <p>76 residues &nbsp;|&nbsp; Style: cartoon &nbsp;|&nbsp;
+     Color: spectrum &nbsp;|&nbsp; Left-drag: rotate &nbsp;|&nbsp;
+     Scroll: zoom &nbsp;|&nbsp; Right-drag: translate</p>
+  <div class="viewer-wrap">
+    <div id="3dmolviewer_17739904749686248"  style="position: relative; width: 900px; height: 700px;">
+        <p id="3dmolwarning_17739904749686248" style="background-color:#ffcccc;color:black">3Dmol.js failed to load for some reason.  Please check your browser console for error messages.<br></p>
+        </div>
+<script>
+
+var loadScriptAsync = function(uri){
+  return new Promise((resolve, reject) => {
+    //this is to ignore the existence of requirejs amd
+    var savedexports, savedmodule;
+    if (typeof exports !== 'undefined') savedexports = exports;
+    else exports = {}
+    if (typeof module !== 'undefined') savedmodule = module;
+    else module = {}
+
+    var tag = document.createElement('script');
+    tag.src = uri;
+    tag.async = true;
+    tag.onload = () => {
+        exports = savedexports;
+        module = savedmodule;
+        resolve();
+    };
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+});
+};
+
+if(typeof $3Dmolpromise === 'undefined') {
+$3Dmolpromise = null;
+  $3Dmolpromise = loadScriptAsync('https://cdn.jsdelivr.net/npm/3dmol@2.5.4/build/3Dmol-min.js');
+}
+
+var viewer_17739904749686248 = null;
+var warn = document.getElementById("3dmolwarning_17739904749686248");
+if(warn) {
+    warn.parentNode.removeChild(warn);
+}
+$3Dmolpromise.then(function() {
+viewer_17739904749686248 = $3Dmol.createViewer(document.getElementById("3dmolviewer_17739904749686248"),{backgroundColor:"white"});
+viewer_17739904749686248.zoomTo();
+	viewer_17739904749686248.addModel("data_UBIQUITIN_1UBQ\n#\n_entry.id  UBIQUITIN_1UBQ\n#\n_cell.length_a     100.000\n_cell.length_b     100.000\n_cell.length_c     100.000\n_cell.angle_alpha  90.000\n_cell.angle_beta   90.000\n_cell.angle_gamma  90.000\n#\n_symmetry.entry_id                  UBIQUITIN_1UBQ\n_symmetry.space_group_name_H-M      'P 1'\n_symmetry.Int_Tables_number         1\n#\nloop_\n_atom_site.group_PDB\n_atom_site.id\n_atom_site.type_symbol\n_atom_site.label_atom_id\n_atom_site.label_alt_id\n_atom_site.label_comp_id\n_atom_site.label_asym_id\n_atom_site.label_entity_id\n_atom_site.label_seq_id\n_atom_site.pdbx_PDB_ins_code\n_atom_site.Cartn_x\n_atom_site.Cartn_y\n_atom_site.Cartn_z\n_atom_site.occupancy\n_atom_site.B_iso_or_equiv\n_atom_site.pdbx_PDB_model_num\nATOM      1  C  CA  .  MET  A  1     1  ?    0.715    -1.535    -3.199  1.00  0.00  1\nATOM      2  C  CA  .  GLN  A  1     2  ?    0.306    -0.951    -3.491  1.00  0.00  1\nATOM      3  C  CA  .  ILE  A  1     3  ?   -0.059    -0.781    -4.598  1.00  0.00  1\nATOM      4  C  CA  .  PHE  A  1     4  ?   -0.497    -0.151    -5.610  1.00  0.00  1\nATOM      5  C  CA  .  VAL  A  1     5  ?   -0.858    -0.500    -5.625  1.00  0.00  1\nATOM      6  C  CA  .  LYS  A  1     6  ?   -1.408    -0.221    -6.286  1.00  0.00  1\nATOM      7  C  CA  .  THR  A  1     7  ?   -1.958    -0.210    -6.442  1.00  0.00  1\nATOM      8  C  CA  .  LEU  A  1     8  ?   -2.391    -0.393    -6.245  1.00  0.00  1\nATOM      9  C  CA  .  THR  A  1     9  ?   -2.752    -0.335    -6.143  1.00  0.00  1\nATOM     10  C  CA  .  GLY  A  1    10  ?   -2.803    -0.649    -5.689  1.00  0.00  1\nATOM     11  C  CA  .  LYS  A  1    11  ?   -3.019    -0.478    -5.052  1.00  0.00  1\nATOM     12  C  CA  .  THR  A  1    12  ?   -3.074    -0.410    -4.214  1.00  0.00  1\nATOM     13  C  CA  .  ILE  A  1    13  ?   -3.306    -0.198    -3.634  1.00  0.00  1\nATOM     14  C  CA  .  THR  A  1    14  ?   -3.331    -0.254    -3.066  1.00  0.00  1\nATOM     15  C  CA  .  LEU  A  1    15  ?   -3.085    -0.129    -2.226  1.00  0.00  1\nATOM     16  C  CA  .  GLU  A  1    16  ?   -2.708    -0.187    -1.647  1.00  0.00  1\nATOM     17  C  CA  .  VAL  A  1    17  ?   -2.201    -0.194    -1.159  1.00  0.00  1\nATOM     18  C  CA  .  GLU  A  1    18  ?   -1.623    -0.276    -0.636  1.00  0.00  1\nATOM     19  C  CA  .  PRO  A  1    19  ?   -1.248    -0.287    -0.366  1.00  0.00  1\nATOM     20  C  CA  .  SER  A  1    20  ?   -0.701    -0.176     0.339  1.00  0.00  1\nATOM     21  C  CA  .  ASP  A  1    21  ?   -0.469    -0.124     0.453  1.00  0.00  1\nATOM     22  C  CA  .  THR  A  1    22  ?   -0.428    -0.135     0.272  1.00  0.00  1\nATOM     23  C  CA  .  ILE  A  1    23  ?   -0.469    -0.110     0.030  1.00  0.00  1\nATOM     24  C  CA  .  GLU  A  1    24  ?   -0.536    -0.149    -0.502  1.00  0.00  1\nATOM     25  C  CA  .  ASN  A  1    25  ?   -0.786     0.059    -1.310  1.00  0.00  1\nATOM     26  C  CA  .  VAL  A  1    26  ?   -0.966     0.150    -2.019  1.00  0.00  1\nATOM     27  C  CA  .  LYS  A  1    27  ?   -1.384     0.406    -2.858  1.00  0.00  1\nATOM     28  C  CA  .  ALA  A  1    28  ?   -1.685     0.836    -3.545  1.00  0.00  1\nATOM     29  C  CA  .  LYS  A  1    29  ?   -1.730     0.861    -4.368  1.00  0.00  1\nATOM     30  C  CA  .  ILE  A  1    30  ?   -1.760     0.790    -5.190  1.00  0.00  1\nATOM     31  C  CA  .  GLN  A  1    31  ?   -1.852     0.614    -5.455  1.00  0.00  1\nATOM     32  C  CA  .  ASP  A  1    32  ?   -2.265     0.830    -6.151  1.00  0.00  1\nATOM     33  C  CA  .  LYS  A  1    33  ?   -2.581     1.314    -6.240  1.00  0.00  1\nATOM     34  C  CA  .  GLU  A  1    34  ?   -2.875     1.575    -6.126  1.00  0.00  1\nATOM     35  C  CA  .  GLY  A  1    35  ?   -2.997     1.269    -6.134  1.00  0.00  1\nATOM     36  C  CA  .  ILE  A  1    36  ?   -2.802     0.877    -5.197  1.00  0.00  1\nATOM     37  C  CA  .  PRO  A  1    37  ?   -2.697     1.166    -4.366  1.00  0.00  1\nATOM     38  C  CA  .  PRO  A  1    38  ?   -1.996     1.090    -3.576  1.00  0.00  1\nATOM     39  C  CA  .  ASP  A  1    39  ?   -1.846     1.609    -3.191  1.00  0.00  1\nATOM     40  C  CA  .  GLN  A  1    40  ?   -2.009     1.859    -3.246  1.00  0.00  1\nATOM     41  C  CA  .  GLN  A  1    41  ?   -2.516     2.029    -2.584  1.00  0.00  1\nATOM     42  C  CA  .  ARG  A  1    42  ?   -2.738     1.839    -1.959  1.00  0.00  1\nATOM     43  C  CA  .  LEU  A  1    43  ?   -3.078     1.847    -1.111  1.00  0.00  1\nATOM     44  C  CA  .  ILE  A  1    44  ?   -3.496     2.038    -0.602  1.00  0.00  1\nATOM     45  C  CA  .  PHE  A  1    45  ?   -3.489     2.291     0.186  1.00  0.00  1\nATOM     46  C  CA  .  ALA  A  1    46  ?   -4.008     2.927     0.935  1.00  0.00  1\nATOM     47  C  CA  .  GLY  A  1    47  ?   -3.707     3.219     1.726  1.00  0.00  1\nATOM     48  C  CA  .  LYS  A  1    48  ?   -3.596     3.468     2.347  1.00  0.00  1\nATOM     49  C  CA  .  GLN  A  1    49  ?   -4.254     4.170     2.687  1.00  0.00  1\nATOM     50  C  CA  .  LEU  A  1    50  ?   -4.449     4.256     2.657  1.00  0.00  1\nATOM     51  C  CA  .  GLU  A  1    51  ?   -3.907     4.084     2.891  1.00  0.00  1\nATOM     52  C  CA  .  ASP  A  1    52  ?   -3.827     4.149     2.847  1.00  0.00  1\nATOM     53  C  CA  .  GLY  A  1    53  ?   -3.443     4.290     3.494  1.00  0.00  1\nATOM     54  C  CA  .  ARG  A  1    54  ?   -3.274     4.788     4.335  1.00  0.00  1\nATOM     55  C  CA  .  THR  A  1    55  ?   -3.371     4.636     4.136  1.00  0.00  1\nATOM     56  C  CA  .  LEU  A  1    56  ?   -3.889     5.062     4.140  1.00  0.00  1\nATOM     57  C  CA  .  SER  A  1    57  ?   -4.096     5.321     4.572  1.00  0.00  1\nATOM     58  C  CA  .  ASP  A  1    58  ?   -5.139     6.139     4.515  1.00  0.00  1\nATOM     59  C  CA  .  TYR  A  1    59  ?   -4.989     6.232     4.265  1.00  0.00  1\nATOM     60  C  CA  .  ASN  A  1    60  ?   -5.079     6.582     4.586  1.00  0.00  1\nATOM     61  C  CA  .  ILE  A  1    61  ?   -6.448     6.721     3.534  1.00  0.00  1\nATOM     62  C  CA  .  GLN  A  1    62  ?   -7.145     6.683     3.407  1.00  0.00  1\nATOM     63  C  CA  .  LYS  A  1    63  ?   -7.469     6.597     2.687  1.00  0.00  1\nATOM     64  C  CA  .  GLU  A  1    64  ?   -7.044     6.463     3.213  1.00  0.00  1\nATOM     65  C  CA  .  SER  A  1    65  ?   -6.672     5.847     3.293  1.00  0.00  1\nATOM     66  C  CA  .  THR  A  1    66  ?   -6.179     5.111     3.323  1.00  0.00  1\nATOM     67  C  CA  .  LEU  A  1    67  ?   -6.014     4.688     3.333  1.00  0.00  1\nATOM     68  C  CA  .  HIS  A  1    68  ?   -5.765     4.309     3.835  1.00  0.00  1\nATOM     69  C  CA  .  LEU  A  1    69  ?   -6.439     3.631     2.784  1.00  0.00  1\nATOM     70  C  CA  .  VAL  A  1    70  ?   -6.574     3.284     2.518  1.00  0.00  1\nATOM     71  C  CA  .  LEU  A  1    71  ?   -6.658     3.060     2.014  1.00  0.00  1\nATOM     72  C  CA  .  ARG  A  1    72  ?   -6.921     2.863     1.666  1.00  0.00  1\nATOM     73  C  CA  .  LEU  A  1    73  ?   -6.567     2.561     1.026  1.00  0.00  1\nATOM     74  C  CA  .  ARG  A  1    74  ?   -5.959     2.479     0.894  1.00  0.00  1\nATOM     75  C  CA  .  GLY  A  1    75  ?   -5.311     2.011     0.281  1.00  0.00  1\nATOM     76  C  CA  .  GLY  A  1    76  ?   -4.548     1.766     0.099  1.00  0.00  1\n#\n","cif");
+	viewer_17739904749686248.setStyle({},{"cartoon": {"color": "spectrum", "thickness": 0.4}});
+	viewer_17739904749686248.setBackgroundColor("white");
+	viewer_17739904749686248.zoomTo();
+viewer_17739904749686248.render();
+});
+</script>
+  </div>
+</body>
+</html>

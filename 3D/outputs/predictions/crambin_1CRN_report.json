@@ -1,0 +1,17 @@
+{
+  "name": "crambin_1CRN",
+  "sequence": "TTCCPSIVARSNFNVCRLPGTPEALCATYTGCIIIPGATCPGDYAN",
+  "length": 46,
+  "checkpoint": "/Users/yashvinayvanshi/Desktop/protein_fold/3D/outputs/checkpoints/best_model_3d.pt",
+  "device": "cpu",
+  "inference_time_s": 0.007,
+  "output_cif": "/Users/yashvinayvanshi/Desktop/protein_fold/3D/outputs/predictions/crambin_1CRN.cif",
+  "timestamp": "2026-03-20T12:34:16",
+  "validation": {
+    "reference_pdb": "1CRN",
+    "predicted_length": 46,
+    "reference_length": 46,
+    "aligned_length": 46,
+    "kabsch_rmsd_A": 8.7114
+  }
+}

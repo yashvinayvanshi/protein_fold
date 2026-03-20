@@ -1,0 +1,17 @@
+{
+  "name": "hiv_protease_1HHP",
+  "sequence": "PQITLWQRPLVTIKIGGQLKEALLDTGADDTVLEEMNLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+  "length": 99,
+  "checkpoint": "/Users/yashvinayvanshi/Desktop/protein_fold/3D/outputs/checkpoints/best_model_3d.pt",
+  "device": "cpu",
+  "inference_time_s": 0.01,
+  "output_cif": "/Users/yashvinayvanshi/Desktop/protein_fold/3D/outputs/predictions/hiv_protease_1HHP.cif",
+  "timestamp": "2026-03-20T12:34:47",
+  "validation": {
+    "reference_pdb": "1HHP",
+    "predicted_length": 99,
+    "reference_length": 99,
+    "aligned_length": 99,
+    "kabsch_rmsd_A": 11.8506
+  }
+}

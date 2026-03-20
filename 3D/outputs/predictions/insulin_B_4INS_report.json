@@ -1,0 +1,17 @@
+{
+  "name": "insulin_B_4INS",
+  "sequence": "FVNQHLCGSHLVEALYLVCGERGFFYTPKT",
+  "length": 30,
+  "checkpoint": "/Users/yashvinayvanshi/Desktop/protein_fold/3D/outputs/checkpoints/best_model_3d.pt",
+  "device": "cpu",
+  "inference_time_s": 0.004,
+  "output_cif": "/Users/yashvinayvanshi/Desktop/protein_fold/3D/outputs/predictions/insulin_B_4INS.cif",
+  "timestamp": "2026-03-20T12:34:54",
+  "validation": {
+    "reference_pdb": "4INS",
+    "predicted_length": 30,
+    "reference_length": 21,
+    "aligned_length": 21,
+    "kabsch_rmsd_A": 6.9658
+  }
+}

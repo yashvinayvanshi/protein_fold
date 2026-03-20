@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Protein 3D Viewer — crambin_1CRN</title>
+  <style>
+    body { font-family: sans-serif; background: #f5f5f5; margin: 0; }
+    h2   { text-align:center; padding:10px; color:#333; }
+    p    { text-align:center; font-size:13px; color:#666; margin:0 0 6px; }
+    .viewer-wrap { display:flex; justify-content:center; padding:10px; }
+  </style>
+</head>
+<body>
+  <h2>Predicted Structure — crambin_1CRN</h2>
+  <p>46 residues &nbsp;|&nbsp; Style: cartoon &nbsp;|&nbsp;
+     Color: spectrum &nbsp;|&nbsp; Left-drag: rotate &nbsp;|&nbsp;
+     Scroll: zoom &nbsp;|&nbsp; Right-drag: translate</p>
+  <div class="viewer-wrap">
+    <div id="3dmolviewer_17739904761105971"  style="position: relative; width: 900px; height: 700px;">
+        <p id="3dmolwarning_17739904761105971" style="background-color:#ffcccc;color:black">3Dmol.js failed to load for some reason.  Please check your browser console for error messages.<br></p>
+        </div>
+<script>
+
+var loadScriptAsync = function(uri){
+  return new Promise((resolve, reject) => {
+    //this is to ignore the existence of requirejs amd
+    var savedexports, savedmodule;
+    if (typeof exports !== 'undefined') savedexports = exports;
+    else exports = {}
+    if (typeof module !== 'undefined') savedmodule = module;
+    else module = {}
+
+    var tag = document.createElement('script');
+    tag.src = uri;
+    tag.async = true;
+    tag.onload = () => {
+        exports = savedexports;
+        module = savedmodule;
+        resolve();
+    };
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+});
+};
+
+if(typeof $3Dmolpromise === 'undefined') {
+$3Dmolpromise = null;
+  $3Dmolpromise = loadScriptAsync('https://cdn.jsdelivr.net/npm/3dmol@2.5.4/build/3Dmol-min.js');
+}
+
+var viewer_17739904761105971 = null;
+var warn = document.getElementById("3dmolwarning_17739904761105971");
+if(warn) {
+    warn.parentNode.removeChild(warn);
+}
+$3Dmolpromise.then(function() {
+viewer_17739904761105971 = $3Dmol.createViewer(document.getElementById("3dmolviewer_17739904761105971"),{backgroundColor:"white"});
+viewer_17739904761105971.zoomTo();
+	viewer_17739904761105971.addModel("data_CRAMBIN_1CRN\n#\n_entry.id  CRAMBIN_1CRN\n#\n_cell.length_a     100.000\n_cell.length_b     100.000\n_cell.length_c     100.000\n_cell.angle_alpha  90.000\n_cell.angle_beta   90.000\n_cell.angle_gamma  90.000\n#\n_symmetry.entry_id                  CRAMBIN_1CRN\n_symmetry.space_group_name_H-M      'P 1'\n_symmetry.Int_Tables_number         1\n#\nloop_\n_atom_site.group_PDB\n_atom_site.id\n_atom_site.type_symbol\n_atom_site.label_atom_id\n_atom_site.label_alt_id\n_atom_site.label_comp_id\n_atom_site.label_asym_id\n_atom_site.label_entity_id\n_atom_site.label_seq_id\n_atom_site.pdbx_PDB_ins_code\n_atom_site.Cartn_x\n_atom_site.Cartn_y\n_atom_site.Cartn_z\n_atom_site.occupancy\n_atom_site.B_iso_or_equiv\n_atom_site.pdbx_PDB_model_num\nATOM      1  C  CA  .  THR  A  1     1  ?    0.930    -2.561     0.195  1.00  0.00  1\nATOM      2  C  CA  .  THR  A  1     2  ?    0.307    -2.441     0.145  1.00  0.00  1\nATOM      3  C  CA  .  CYS  A  1     3  ?   -0.061    -2.174    -0.013  1.00  0.00  1\nATOM      4  C  CA  .  CYS  A  1     4  ?   -0.481    -1.514    -0.340  1.00  0.00  1\nATOM      5  C  CA  .  PRO  A  1     5  ?   -0.634    -1.135    -0.379  1.00  0.00  1\nATOM      6  C  CA  .  SER  A  1     6  ?   -0.816    -0.833    -0.521  1.00  0.00  1\nATOM      7  C  CA  .  ILE  A  1     7  ?   -0.992    -0.884    -1.134  1.00  0.00  1\nATOM      8  C  CA  .  VAL  A  1     8  ?   -0.922    -0.916    -1.217  1.00  0.00  1\nATOM      9  C  CA  .  ALA  A  1     9  ?   -0.907    -0.822    -1.038  1.00  0.00  1\nATOM     10  C  CA  .  ARG  A  1    10  ?   -0.647    -1.204    -1.160  1.00  0.00  1\nATOM     11  C  CA  .  SER  A  1    11  ?   -0.415    -1.691    -1.380  1.00  0.00  1\nATOM     12  C  CA  .  ASN  A  1    12  ?   -0.238    -2.071    -1.598  1.00  0.00  1\nATOM     13  C  CA  .  PHE  A  1    13  ?    0.139    -2.451    -1.618  1.00  0.00  1\nATOM     14  C  CA  .  ASN  A  1    14  ?   -0.013    -2.284    -1.832  1.00  0.00  1\nATOM     15  C  CA  .  VAL  A  1    15  ?   -0.013    -2.083    -1.632  1.00  0.00  1\nATOM     16  C  CA  .  CYS  A  1    16  ?   -0.342    -1.573    -1.717  1.00  0.00  1\nATOM     17  C  CA  .  ARG  A  1    17  ?   -0.496    -1.125    -1.481  1.00  0.00  1\nATOM     18  C  CA  .  LEU  A  1    18  ?   -0.412    -1.050    -1.187  1.00  0.00  1\nATOM     19  C  CA  .  PRO  A  1    19  ?   -0.493    -0.760    -1.040  1.00  0.00  1\nATOM     20  C  CA  .  GLY  A  1    20  ?   -0.336    -0.771    -0.723  1.00  0.00  1\nATOM     21  C  CA  .  THR  A  1    21  ?   -0.449    -0.675    -0.775  1.00  0.00  1\nATOM     22  C  CA  .  PRO  A  1    22  ?   -0.595    -0.445    -0.840  1.00  0.00  1\nATOM     23  C  CA  .  GLU  A  1    23  ?   -0.771    -0.243    -1.118  1.00  0.00  1\nATOM     24  C  CA  .  ALA  A  1    24  ?   -0.915    -0.155    -0.993  1.00  0.00  1\nATOM     25  C  CA  .  LEU  A  1    25  ?   -1.289    -0.068    -1.219  1.00  0.00  1\nATOM     26  C  CA  .  CYS  A  1    26  ?   -1.647    -0.117    -1.148  1.00  0.00  1\nATOM     27  C  CA  .  ALA  A  1    27  ?   -2.132    -0.077    -1.269  1.00  0.00  1\nATOM     28  C  CA  .  THR  A  1    28  ?   -2.085    -0.305    -1.051  1.00  0.00  1\nATOM     29  C  CA  .  TYR  A  1    29  ?   -1.896    -0.453    -0.818  1.00  0.00  1\nATOM     30  C  CA  .  THR  A  1    30  ?   -1.859    -0.455    -0.628  1.00  0.00  1\nATOM     31  C  CA  .  GLY  A  1    31  ?   -1.616    -0.548    -0.513  1.00  0.00  1\nATOM     32  C  CA  .  CYS  A  1    32  ?   -1.393    -0.712    -0.464  1.00  0.00  1\nATOM     33  C  CA  .  ILE  A  1    33  ?   -1.147    -0.859    -0.354  1.00  0.00  1\nATOM     34  C  CA  .  ILE  A  1    34  ?   -0.945    -1.026    -0.164  1.00  0.00  1\nATOM     35  C  CA  .  ILE  A  1    35  ?   -0.746    -1.081     0.167  1.00  0.00  1\nATOM     36  C  CA  .  PRO  A  1    36  ?   -0.496    -1.020     0.600  1.00  0.00  1\nATOM     37  C  CA  .  GLY  A  1    37  ?   -0.250    -1.056     0.888  1.00  0.00  1\nATOM     38  C  CA  .  ALA  A  1    38  ?    0.108    -1.115     1.446  1.00  0.00  1\nATOM     39  C  CA  .  THR  A  1    39  ?    0.333    -1.200     1.779  1.00  0.00  1\nATOM     40  C  CA  .  CYS  A  1    40  ?    0.514    -1.157     2.032  1.00  0.00  1\nATOM     41  C  CA  .  PRO  A  1    41  ?    0.605    -0.908     2.193  1.00  0.00  1\nATOM     42  C  CA  .  GLY  A  1    42  ?    0.693    -0.814     2.303  1.00  0.00  1\nATOM     43  C  CA  .  ASP  A  1    43  ?    0.501    -0.477     1.938  1.00  0.00  1\nATOM     44  C  CA  .  TYR  A  1    44  ?    0.452    -0.411     1.690  1.00  0.00  1\nATOM     45  C  CA  .  ALA  A  1    45  ?    0.344    -0.268     1.402  1.00  0.00  1\nATOM     46  C  CA  .  ASN  A  1    46  ?    0.278    -0.213     1.040  1.00  0.00  1\n#\n","cif");
+	viewer_17739904761105971.setStyle({},{"cartoon": {"color": "spectrum", "thickness": 0.4}});
+	viewer_17739904761105971.setBackgroundColor("white");
+	viewer_17739904761105971.zoomTo();
+viewer_17739904761105971.render();
+});
+</script>
+  </div>
+</body>
+</html>
